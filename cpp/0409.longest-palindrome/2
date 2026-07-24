@@ -1,0 +1,48 @@
+// Created by Gavin at 2026/02/01 22:26
+// leetgo: 1.4.15
+// https://leetcode.cn/problems/longest-palindrome/
+
+#include <bits/stdc++.h>
+#include "LC_IO.h"
+using namespace std;
+
+// @lc code=begin
+
+class Solution {
+public:
+    int longestPalindrome(string s) {
+        unordered_map<char, int> ch;
+        int even = 0, odd = 0;
+        int n = s.size();
+        for (int i = 0; i < n; i++) {
+            ch[s[i]]++;
+        }
+        for (int j = 0; j < n; j++) {
+            if (ch[s[j]] / 2 == 0) {
+                even += ch[s[j]];
+            }
+            if (ch[s[j]] / 2 == 1) {
+                odd = 1;
+            }
+        }
+        return even + odd;
+    }
+};
+
+// @lc code=end
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	stringstream out_stream;
+
+	string s;
+	LeetCodeIO::scan(cin, s);
+
+	Solution *obj = new Solution();
+	auto res = obj->longestPalindrome(s);
+	LeetCodeIO::print(out_stream, res);
+	cout << "\noutput: " << out_stream.rdbuf() << endl;
+
+	delete obj;
+	return 0;
+}

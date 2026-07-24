@@ -1,0 +1,14 @@
+input:
+"aab"
+output:
+[["a","a","b"],["aa","b"]]
+
+input:
+"a"
+output:
+[["a"]]
+
+input:
+"abbab"
+output:
+[["a","b","b","a","b"],["a","b","bab"],["a","bb","a","b"],["abba","b"]]

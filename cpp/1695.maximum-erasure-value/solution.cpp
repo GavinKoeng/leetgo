@@ -1,0 +1,47 @@
+// Created by Gavin at 2025/12/12 11:15
+// leetgo: 1.4.15
+// https://leetcode.cn/problems/maximum-erasure-value/
+
+#include <bits/stdc++.h>
+#include "LC_IO.h"
+using namespace std;
+
+// @lc code=begin
+
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+       int n = nums.size();
+	   unordered_set<int> seen;
+	   int ans = 0, psum = 0;
+	   for (int i = 0, j = 0; i < n; ++i) {
+			   psum += nums[i];
+			   while (seen.count(nums[i])) {
+					   seen.erase(nums[j]);
+					   psum -= nums[j];
+					   j++;
+			   }
+			   seen.emplace(nums[i]);
+			   ans = max(ans, psum);
+	   }
+	   return ans;
+    }
+};
+
+// @lc code=end
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	stringstream out_stream;
+
+	vector<int> nums;
+	LeetCodeIO::scan(cin, nums);
+
+	Solution *obj = new Solution();
+	auto res = obj->maximumUniqueSubarray(nums);
+	LeetCodeIO::print(out_stream, res);
+	cout << "\noutput: " << out_stream.rdbuf() << endl;
+
+	delete obj;
+	return 0;
+}
