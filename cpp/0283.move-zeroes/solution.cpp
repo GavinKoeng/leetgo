@@ -11,20 +11,13 @@ using namespace std;
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
-        int n = nums.size();
-        if (n == 0) return;
-
-        int fast = 0, slow = 0;
-        while (fast < n) {
+        int slow = 0;
+        for (int fast = 0; fast < nums.size(); fast++) {
             if (nums[fast] != 0) {
-                nums[slow] = nums[fast];
+                swap(nums[fast], nums[slow]);
                 slow++;
             }
-            fast++;
         }
-
-        for (; slow < n; slow++)
-            nums[slow] = 0;
     }
 };
 
