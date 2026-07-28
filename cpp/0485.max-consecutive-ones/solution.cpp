@@ -1,4 +1,4 @@
-// Created by Gavin at 2026/01/23 10:48
+// Created by Gavin at 2026/07/28 17:24
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/max-consecutive-ones/
 
@@ -11,17 +11,21 @@ using namespace std;
 class Solution {
 public:
     int findMaxConsecutiveOnes(vector<int>& nums) {
-       int k = 0, ans = 0, n = nums.size();
-       for (int i = 0; i < n; ++i) {
-           if (nums[i] == 1) {
-               ++k;
-           } else {
-               ans = max(ans, k);
-               k = 0;
-           }
-       }
-       ans = max(ans, k);
-       return ans;
+        if (nums.empty()) return 0;
+        int n = nums.size();
+        int count = 0, num = 0, mov = 0;
+        while (mov < n) {
+            if (nums[mov]) {
+                num++;
+                if (count < num) {
+                    count = num;
+                }
+            } else {
+                num = 0;
+            }
+            mov++;
+        }
+        return count;
     }
 };
 
