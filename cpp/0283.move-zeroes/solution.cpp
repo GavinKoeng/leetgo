@@ -1,4 +1,4 @@
-// Created by Gavin at 2026/01/23 10:30
+// Created by Gavin at 2026/07/28 11:09
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/move-zeroes/
 
@@ -11,14 +11,20 @@ using namespace std;
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
-        int n = nums.size(), left = 0, right = 0;
-        while (right < n) {
-            if (nums[right]) {
-                swap(nums[left], nums[right]);
-                left++;
+        int n = nums.size();
+        if (n == 0) return;
+
+        int fast = 0, slow = 0;
+        while (fast < n) {
+            if (nums[fast] != 0) {
+                nums[slow] = nums[fast];
+                slow++;
             }
-            right++;
+            fast++;
         }
+
+        for (; slow < n; slow++)
+            nums[slow] = 0;
     }
 };
 
