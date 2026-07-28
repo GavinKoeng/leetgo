@@ -1,4 +1,4 @@
-// Created by Gavin at 2026/01/23 09:24
+// Created by Gavin at 2026/07/28 10:59
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/remove-duplicates-from-sorted-array/
 
@@ -12,16 +12,15 @@ class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
         int n = nums.size();
-        if (n == 0) {
-            return 0;
-        }
+        if ( n == 0 ) return 0;
+
         int fast = 1, slow = 1;
-        while (fast < n) {
-            if (nums[fast] != nums[fast - 1]) {
+        while ( fast < n ) {
+            if ( nums[fast] != nums[fast - 1] ) {
                 nums[slow] = nums[fast];
-                ++slow;
+                slow++;
             }
-            ++fast;
+            fast++;
         }
         return slow;
     }
