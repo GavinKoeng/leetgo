@@ -1,4 +1,4 @@
-// Created by Gavin at 2026/07/29 10:25
+// Created by Gavin at 2026/07/29 10:40
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/remove-element/
 
@@ -11,16 +11,12 @@ using namespace std;
 class Solution {
 public:
     int removeElement(vector<int>& nums, int val) {
-        //if(nums.empty()) return 0;
         int n = nums.size();
-        int slow = 0;
-        for (int i = 0; i < n; i++) {
-            if (nums[i] == val) {
-            } else {
-                nums[slow++] = nums[i];
-            }
+        int left = 0;
+        for (int right = 0; right < n; right++) {
+            if (nums[right] != val) nums[left++] = nums[right];
         }
-        return slow;
+        return left;
     }
 };
 
