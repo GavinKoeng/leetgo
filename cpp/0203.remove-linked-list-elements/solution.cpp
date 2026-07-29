@@ -1,4 +1,4 @@
-// Created by Gavin at 2026/01/23 14:41
+// Created by Gavin at 2026/07/29 16:53
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/remove-linked-list-elements/
 
@@ -11,11 +11,18 @@ using namespace std;
 class Solution {
 public:
     ListNode* removeElements(ListNode* head, int val) {
-        if (head == nullptr) {
-            return head;
+        ListNode dummyHead(0);
+        dummyHead.next = head;
+        ListNode* cur = &dummyHead;
+        while (cur->next != nullptr) {
+            if (cur->next->val == val) {
+                //ListNode* tmp = cur->next;
+                cur->next = cur->next->next;
+            } else {
+                cur = cur->next;
+            }
         }
-        head->next = removeElements(head->next, val);
-        return head->val == val ? head->next : head;
+        return dummyHead.next;
     }
 };
 
