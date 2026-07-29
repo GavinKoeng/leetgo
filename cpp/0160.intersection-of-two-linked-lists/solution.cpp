@@ -1,4 +1,4 @@
-// Created by Gavin at 2026/01/23 11:45
+// Created by Gavin at 2026/07/29 15:12
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/intersection-of-two-linked-lists/
 
@@ -11,15 +11,18 @@ using namespace std;
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        if (headA == nullptr || headB == nullptr) {
-            return nullptr;
+        unordered_set<ListNode *> visited;
+        ListNode* temp = headA;
+        while (temp) {
+            visited.insert(temp);
+            temp = temp->next;
         }
-        ListNode *pA = headA, *pB = headB;
-        while (pA != pB) {
-            pA = pA == nullptr ? headB : pA->next;
-            pB = pB == nullptr ? headA : pB->next;
+        temp = headB;
+        while (temp) {
+            if (visited.count(temp)) return temp;
+            temp = temp->next;
         }
-        return pA;
+        return nullptr;
     }
 };
 
@@ -42,7 +45,8 @@ int main() {
 	LeetCodeIO::scan(cin, skipB);
 
 	Solution *obj = new Solution();
-	auto res = obj->getIntersectionNode(intersectVal, listA, listB, skipA, skipB);
+	auto res = obj->getIntersectionNode(listA, listB);
+	//auto res = obj->getIntersectionNode(intersectVal, listA, listB, skipA, skipB);
 	LeetCodeIO::print(out_stream, res);
 	cout << "\noutput: " << out_stream.rdbuf() << endl;
 
