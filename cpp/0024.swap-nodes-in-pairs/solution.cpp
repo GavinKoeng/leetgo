@@ -1,4 +1,4 @@
-// Created by Gavin at 2026/07/29 14:03
+// Created by Gavin at 2026/07/29 14:33
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/swap-nodes-in-pairs/
 
@@ -11,11 +11,20 @@ using namespace std;
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-        if (head == nullptr || head->next == nullptr) return head;
-        ListNode* Newhead = head->next;
-        head->next = swapPairs(Newhead->next);
-        Newhead->next = head;
-        return Newhead;
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead->next = head;
+        ListNode* temp = dummyHead;
+        while (temp->next != nullptr && temp->next->next != nullptr) {
+            ListNode* node1 = temp->next;
+            ListNode* node2 = temp->next->next;
+            temp->next = node2;
+            node1->next = node2->next;
+            node2->next = node1;
+            temp = node1;
+        }
+        ListNode* ans = dummyHead->next;
+        delete dummyHead;
+        return ans;
     }
 };
 
