@@ -1,4 +1,4 @@
-// Created by gavin at 2026/08/04 23:42
+// Created by gavin at 2026/08/04 23:49
 // leetgo: 1.4.17
 // https://leetcode.cn/problems/merge-two-sorted-lists/
 
@@ -11,17 +11,22 @@ using namespace std;
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        if (list1 == nullptr) {
-            return list2;
-        } else if (list2 == nullptr) {
-            return list1;
-        } else if (list1->val < list2->val) {
-            list1->next = mergeTwoLists(list1->next, list2);
-            return list1;
-        } else {
-            list2->next = mergeTwoLists(list2->next, list1);
-            return list2;
+        ListNode* dummyHead = new ListNode(-1);
+        ListNode* list = dummyHead;
+        while (list1 != nullptr && list2 != nullptr) {
+            if (list1->val < list2->val) {
+                list->next = list1;
+                list1 = list1->next;
+            } else {
+                list->next = list2;
+                list2 = list2->next;
+            }
+            list = list->next;
         }
+        list->next = list1 == nullptr ? list2 : list1;
+        ListNode* ans = dummyHead->next;
+        delete dummyHead;
+        return ans;
     }
 };
 
