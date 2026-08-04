@@ -1,5 +1,5 @@
-// Created by Gavin at 2026/08/04 18:22
-// leetgo: 1.4.15
+// Created by gavin at 2026/08/04 23:42
+// leetgo: 1.4.17
 // https://leetcode.cn/problems/merge-two-sorted-lists/
 
 #include <bits/stdc++.h>
@@ -11,27 +11,17 @@ using namespace std;
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* dummyHead = new ListNode(0);
-        ListNode* list = dummyHead;
-        while(list1 != nullptr && list2 != nullptr) {
-            if (list1->val > list2->val) {
-                list->next = list2;
-                list2 = list2->next;
-            } else {
-                list->next = list1;
-                list1 = list1->next;
-            }
-            list = list->next;
+        if (list1 == nullptr) {
+            return list2;
+        } else if (list2 == nullptr) {
+            return list1;
+        } else if (list1->val < list2->val) {
+            list1->next = mergeTwoLists(list1->next, list2);
+            return list1;
+        } else {
+            list2->next = mergeTwoLists(list2->next, list1);
+            return list2;
         }
-        if (list1 != nullptr) {
-            list->next = list1;
-        }
-        if (list2 != nullptr) {
-            list->next = list2;
-        }
-        ListNode* ans = dummyHead->next;
-        delete dummyHead;
-        return ans;
     }
 };
 
