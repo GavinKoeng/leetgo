@@ -1,4 +1,4 @@
-// Created by Gavin at 2026/01/23 15:50
+// Created by gavin at 2026/08/06 12:54
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/odd-even-linked-list/
 
@@ -11,19 +11,18 @@ using namespace std;
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
-        if (head == nullptr) {
-            return head;
-        }
-        ListNode* evenhead = head->next;
+        if (head == nullptr) return head;
+        // if (head == nullptr || head->next == nullptr) return head;
         ListNode* odd = head;
         ListNode* even = head->next;
-        while (even != nullptr && even->next != nullptr) {
+        ListNode* evenHead = even;
+        while (odd->next != nullptr && even->next != nullptr) {
             odd->next = even->next;
             odd = odd->next;
             even->next = odd->next;
             even = even->next;
         }
-        odd->next = evenhead;
+        odd->next = evenHead;
         return head;
     }
 };
