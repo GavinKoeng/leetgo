@@ -1,47 +1,35 @@
-// Created by Gavin at 2026/01/24 22:39
+// Created by gavin at 2026/08/06 17:05
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/reverse-linked-list-ii/
 
 #include <bits/stdc++.h>
-#include "LC_IO.h"
+#include "../LC_IO.h"
 using namespace std;
 
 // @lc code=begin
 
+// ListNode
 class Solution {
-private:
-    void reverseLinkedList(ListNode *head) {
-        ListNode *pre = nullptr;
-        ListNode *cur = head;
-        while (cur != nullptr) {
-            ListNode *next = cur->next;
-            cur->next = pre;
-            pre = cur;
-            cur = next;
-        }
-    }
-
 public:
-    ListNode* reverseBetween(ListNode *head, int left, int right) {
-        ListNode *dummyNode = new ListNode(-1);
-        dummyNode->next = head;
-
-        ListNode *pre = dummyNode;
-        for (int i = 0; i < left - 1; ++i) {
-            pre = pre->next;
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        ListNode* dummyHead = new ListNode(0, head);
+        ListNode* prev = dummyHead;
+        for (int i = 0; i < left - 1; i++) prev = prev->next;
+        ListNode* cur = prev->next;
+        stack<ListNode*> stk;
+        for (int i = 0; i < right - left + 1; i++) {
+            stk.push(cur);
+            cur = cur->next;
         }
-        ListNode *rightNode = pre;
-        for (int i = 0; i < right - left + 1; ++i) {
-            rightNode = rightNode->next;
+        ListNode* after = cur;
+        cur = prev;
+        for (int i = 0; i < right - left + 1; i++) {
+            cur->next = stk.top();
+            stk.pop();
+            cur = cur->next;
         }
-        ListNode *leftNode = pre->next;
-        ListNode *curr = rightNode->next;
-        pre->next = nullptr;
-        rightNode->next = nullptr;
-        reverseLinkedList(leftNode);
-        pre->next = rightNode;
-        leftNode->next = curr;
-        return dummyNode->next;
+        cur->next = after;
+        return dummyHead->next;
     }
 };
 
