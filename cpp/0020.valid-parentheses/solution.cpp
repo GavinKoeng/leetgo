@@ -1,4 +1,4 @@
-// Created by gavin at 2026/08/08 17:52
+// Created by gavin at 2026/08/08 20:26
 // leetgo: 1.4.17
 // https://leetcode.cn/problems/valid-parentheses/
 
@@ -11,20 +11,23 @@ using namespace std;
 class Solution {
 public:
     bool isValid(string s) {
+        int n = s.size();
+        if (n % 2 != 0) return false;
+        unordered_map<char, char> pairs {
+            {')', '('},
+            {'}', '{'},
+            {']', '['}
+        };
         stack<char> stk;
-        for (int i = 0; i < s.length(); i++) {
-            if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
-                stk.push(s[i]);
-            } else if (stk.empty()) {
-                return false;
-            } else if (s[i] == ')' && stk.top() != '(') {
-                return false;
-            } else if (s[i] == '}' && stk.top() != '{') {
-                return false;
-            } else if (s[i] == ']' && stk.top() != '[') {
-                return false;
-            } else if ((s[i] == ')' && stk.top() == '(') || (s[i] == '}' && stk.top() == '{') || (s[i] == ']' && stk.top() == '[')) {
-                stk.pop();
+        for (char ch : s) {
+            if (pairs.count(ch)) {
+                if (stk.empty() || pairs[ch] != stk.top()) {
+                    return false;
+                } else {
+                    stk.pop();
+                }
+            } else {
+                stk.push(ch);
             }
         }
         return stk.empty();
