@@ -1,4 +1,4 @@
-// Created by gavin at 2026/08/08 11:25
+// Created by gavin at 2026/08/08 16:43
 // leetgo: 1.4.17
 // https://leetcode.cn/problems/reverse-linked-list-ii/
 
@@ -9,31 +9,19 @@ using namespace std;
 // @lc code=begin
 
 class Solution {
-private:
-    void reverseLinkedList(ListNode* head) {
-        ListNode* pre = nullptr;
-        ListNode* cur = head;
-        while (cur != nullptr) {
-            ListNode* next = cur->next;
-            cur->next = pre;
-            pre = cur;
-            cur = next;
-        }
-    }
 public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
         ListNode* dummyHead = new ListNode(0, head);
-        ListNode* prev = dummyHead;
-        for (int i = 0; i < left - 1; i++) prev = prev->next;
-        ListNode* rightNode = prev;
-        for (int i = 0; i < right - left + 1; i++) rightNode = rightNode->next;
-        ListNode* leftNode = prev->next;
-        prev->next = nullptr;
-        ListNode* afterNode = rightNode->next;
-        rightNode->next = nullptr;
-        reverseLinkedList(leftNode);
-        prev->next = rightNode;
-        leftNode->next = afterNode;
+        ListNode* pre = dummyHead;
+        for (int i = 0; i < left - 1; i++) pre = pre->next;
+        ListNode* cur = pre->next;
+        ListNode* next = nullptr;
+        for (int i = 0; i < right - left; i++) {
+            next = cur->next;
+            cur->next = next->next;
+            next->next = pre->next;
+            pre->next = next;
+        }
         return dummyHead->next;
     }
 };
