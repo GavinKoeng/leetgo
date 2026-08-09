@@ -11,3 +11,4 @@ go.work.sum
 misc/*.gif
 misc/questions.json
 *.swp
+*.clangd
