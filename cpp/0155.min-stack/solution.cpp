@@ -1,4 +1,4 @@
-// Created by gavin at 2026/08/11 00:03
+// Created by gavin at 2026/08/11 23:42
 // leetgo: 1.4.15
 // https://leetcode.cn/problems/min-stack/
 
@@ -9,29 +9,30 @@ using namespace std;
 // @lc code=begin
 
 class MinStack {
-    stack<int> stk;
-    stack<int> min_stk;
+private:
+    stack<pair<int, int>> stk;
 public:
     MinStack() {
-        min_stk.push(INT_MAX);
     }
     
     void push(int value) {
-        stk.push(value);
-        min_stk.push(min(min_stk.top(),value));
+        if (stk.size() == 0) {
+            stk.push({value, value});
+        } else {
+            stk.push({value, min(value, stk.top().second)});
+        }
     }
     
     void pop() {
         stk.pop();
-        min_stk.pop();
     }
     
     int top() {
-        return stk.top();
+        return stk.top().first;
     }
     
     int getMin() {
-        return min_stk.top();
+        return stk.top().second;
     }
 };
 
