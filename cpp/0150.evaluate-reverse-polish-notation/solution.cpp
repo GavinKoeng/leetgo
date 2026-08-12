@@ -1,4 +1,4 @@
-// Created by gavin at 2026/08/12 23:12
+// Created by gavin at 2026/08/13 00:07
 // leetgo: 1.4.17
 // https://leetcode.cn/problems/evaluate-reverse-polish-notation/
 
@@ -11,37 +11,36 @@ using namespace std;
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-        stack<int> stk;
         int n = tokens.size();
+        vector<int> stk((n + 1) / 2);
+        int index = -1;
         for (int i = 0; i < n; i++) {
             string& token = tokens[i];
-            if (isNumber(token)) {
-                stk.push(atoi(token.c_str()));
+            if (token.length() > 1 || isdigit(token[0])) {
+                index++;
+                stk[index] = atoi(token.c_str());
             } else {
-                int num2 = stk.top();
-                stk.pop();
-                int num1 = stk.top();
-                stk.pop();
                 switch (token[0]) {
                     case '+':
-                        stk.push(num1 + num2);
+                        index--;
+                        stk[index] += stk[index + 1];
                         break;
                     case '-':
-                        stk.push(num1 - num2);
+                        index--;
+                        stk[index] -= stk[index + 1];
                         break;
                     case '*':
-                        stk.push(num1 * num2);
+                        index--;
+                        stk[index] *= stk[index + 1];
                         break;
                     case '/':
-                        stk.push(num1 / num2);
+                        index--;
+                        stk[index] /= stk[index + 1];
                         break;
                 }
             }
         }
-        return stk.top();
-    }
-    bool isNumber(string& token) {
-        return !(token == "+" || token == "-" || token == "*" || token == "/");
+        return stk[index];
     }
 };
 
