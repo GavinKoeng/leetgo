@@ -1,5 +1,5 @@
-// Created by Gavin at 2026/01/25 23:08
-// leetgo: 1.4.15
+// Created by gavin at 2026/08/12 23:12
+// leetgo: 1.4.17
 // https://leetcode.cn/problems/evaluate-reverse-polish-notation/
 
 #include <bits/stdc++.h>
@@ -13,7 +13,7 @@ public:
     int evalRPN(vector<string>& tokens) {
         stack<int> stk;
         int n = tokens.size();
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < n; i++) {
             string& token = tokens[i];
             if (isNumber(token)) {
                 stk.push(atoi(token.c_str()));
@@ -23,16 +23,16 @@ public:
                 int num1 = stk.top();
                 stk.pop();
                 switch (token[0]) {
-                    case '+' :
+                    case '+':
                         stk.push(num1 + num2);
                         break;
-                    case '-' :
+                    case '-':
                         stk.push(num1 - num2);
                         break;
-                    case '*' :
+                    case '*':
                         stk.push(num1 * num2);
                         break;
-                    case '/' :
+                    case '/':
                         stk.push(num1 / num2);
                         break;
                 }
@@ -40,7 +40,6 @@ public:
         }
         return stk.top();
     }
-
     bool isNumber(string& token) {
         return !(token == "+" || token == "-" || token == "*" || token == "/");
     }
