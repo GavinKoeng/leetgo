@@ -1,9 +1,9 @@
-// Created by gavin at 2026/08/13 09:35
+// Created by gavin at 2026/08/13 10:11
 // leetgo: 1.4.17
 // https://leetcode.cn/problems/add-two-numbers/
 
 #include <bits/stdc++.h>
-#include "../LC_IO.h"
+#include "LC_IO.h"
 using namespace std;
 
 // @lc code=begin
@@ -11,27 +11,32 @@ using namespace std;
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* dummyHead = new ListNode(0);
-        ListNode* current = dummyHead;
+        ListNode *head = nullptr, *tail = nullptr;
         int carry = 0;
-        while (l1 != nullptr || l2 != nullptr || carry != 0) {
-            int sum = carry;
+        while (l1 || l2) {
+            int n1 = l1 ? l1->val : 0;
+            int n2 = l2 ? l2->val : 0;
+            int sum = n1 + n2 + carry;
+            if (!head) {
+                head = tail = new ListNode(sum % 10);
+            } else {
+                tail->next = new ListNode(sum % 10);
+                tail = tail->next;
+            }
+            carry = sum / 10;
 
-            if (l1 != nullptr) {
-                sum += l1->val;
+            if (l1) {
                 l1 = l1->next;
             }
 
-            if (l2 != nullptr) {
-                sum += l2->val;
+            if (l2) {
                 l2 = l2->next;
             }
-
-            carry = sum / 10;
-            current->next = new ListNode(sum % 10);
-            current = current->next;
         }
-        return dummyHead->next;
+        if (carry) {
+            tail->next = new ListNode(carry);
+        }
+        return head;
     }
 };
 
